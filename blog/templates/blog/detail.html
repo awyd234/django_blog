@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="bd" class="wrp clear-fix">
+        <div id="main">
+            <div id="detail-tittle">
+                <ul id="single-nav">
+                    <li><a href="{% url 'blog:index' %}">首页</a></li>
+                    <li>&gt;</li>
+                    <li>
+                        <ul class="post-categories">
+                            <li>
+                                <a href="" title="" rel="category">{{ article.category.name }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>&gt;</li>
+                    <li class="title-active">
+                        <a href="{% url 'blog:detail' article.pk %}" rel="bookmark">{{ article.title }}</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="post-main" class="">
+                <div class="post-hd">
+                    <h1 class="title">{{ article.title }}</h1>
+                </div>
+                <div class="date-read">
+                    <i class="icon-date"></i>
+                    <span class="date">{{ article.last_modified_time|date:"Y年n月d日" }}</span>
+                </div>
+                <div class="post-hd">
+                    {{ article.body | safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="previous-next-nav"></div>
+{% endblock %}

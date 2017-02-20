@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="utf-8">
+<head>
+    <meta charset="UTF-8">
+    <title>MyBlog</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <script type="javascript" href="{% static 'js/jquery-3.1.1.js' %}"></script>
+</head>
+<body>
+<div id="header">
+    <div id="header-wrap">
+        <a href="{% url 'blog:index' %}" title="我的第一个博客" id="logo"></a>
+        <div id="header-right" class="login">
+            <button class="btn btn-default">Log In</button>
+{#            <button class="btn btn-default">Register</button>#}
+        </div>
+    </div>
+</div>
+<div id="content">
+    {% block content %} {% endblock %}
+</div>
+<div id="footer">
+    <div id="footer-wrap">
+        <h2 style="margin: 0">This is footer!</h2>
+    </div>
+</div>
+</body>
+</html>
