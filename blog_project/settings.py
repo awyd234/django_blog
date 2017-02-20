@@ -27,7 +27,6 @@ SECRET_KEY = '6y$fpeh5x1904dk+bcj26hhhp@2eag9i%$#)(9j-c6w3kav-ml'
 DEBUG = True
 
 ALLOWED_HOSTS = get_value('others', 'allowed_host').split(',')
-print ALLOWED_HOSTS
 
 
 # Application definition
