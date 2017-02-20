@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from config_parse import get_value
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,8 @@ SECRET_KEY = '6y$fpeh5x1904dk+bcj26hhhp@2eag9i%$#)(9j-c6w3kav-ml'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.103', '1662757k3a.51mypc.cn', 'localhost']
+ALLOWED_HOSTS = get_value('others', 'allowed_host').split(',')
+print ALLOWED_HOSTS
 
 
 # Application definition
@@ -78,11 +80,11 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blog',
-        'USER': 'test123',
-        'PASSWORD': '123321',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': get_value('mysql', 'db'),
+        'USER': get_value('mysql', 'username'),
+        'PASSWORD': get_value('mysql', 'paswd'),
+        'HOST': get_value('mysql', 'host'),
+        'PORT': get_value('mysql', 'port'),
     }
 }
 
