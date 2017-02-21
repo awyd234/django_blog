@@ -9,7 +9,7 @@
                     <li>
                         <ul class="post-categories">
                             <li>
-                                <a href="" title="" rel="category">{{ article.category.name }}</a>
+                                <a href="#" title="" rel="category">{{ article.category.name }}</a>
                             </li>
                         </ul>
                     </li>
@@ -25,7 +25,9 @@
                 </div>
                 <div class="date-read">
                     <i class="icon-date"></i>
-                    <span class="date">{{ article.last_modified_time|date:"Y年n月d日" }}</span>
+                    <span class="date">{{ article.last_modified_time|date:"Y-n-d h:m" }}</span>
+                    <span>Views({{ article.views }})</span>
+                    <span>Likes({{ article.likes }})</span>
                 </div>
                 <div class="post-hd">
                     {{ article.body | safe }}

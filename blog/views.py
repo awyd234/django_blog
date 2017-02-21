@@ -11,7 +11,7 @@ class IndexView(ListView):
     context_object_name = "article_list"
 
     def get_queryset(self):
-        articles_list = Article.objects.filter(status='p')
+        articles_list = Article.objects.filter(status='p').order_by('created_time')
         for article in articles_list:
             article.body = markdown2.markdown(article.body, )
         return articles_list
@@ -30,12 +30,19 @@ class ArticleDetailView(DetailView):
     def get_object(self, queryset=None):
         obj = super(ArticleDetailView, self).get_object()
         obj.body = markdown2.markdown(obj.body, extras=['fenced-code-blocks'], )
+
+        article_id = obj.id
+        article = Article.objects.get(id=article_id)
+        article.views = article.views + 1
+        article.save()
+
         return obj
 
 
 class CategoryView(ListView):
     template_name = "blog/index.html"
     context_object_name = "article_list"
+    pk_url_kwarg = "cate_id"
 
     def get_queryset(self):
         article_list = Article.objects.filter(category=self.kwargs['cate_id'], status='p')
