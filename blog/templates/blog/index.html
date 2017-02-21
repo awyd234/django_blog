@@ -10,14 +10,20 @@
             <ul id="panel-categories-body">
                 {% for category in category_list %}
                     <li class="panel-categories-name">
-                        <a href="/category/{{ category.id }}">{{category.name}}</a>
+                        <a href="/category/{{ category.id }}">
+                            {{category.name}}({{ category.num_articles }})
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
     </div>
     <div id="right-side">
-        <div id="right-side-header">Articles List</div>
+        <div id="right-side-header">Articles List
+            {% if active_category.name != null %}
+                >{{ active_category.name }}
+            {% endif %}
+        </div>
         <div id="right-side-articles">
             {% for article in article_list %}
                 <div class="right-side-article">

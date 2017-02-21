@@ -2,6 +2,7 @@
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.db.models.aggregates import Count
 from blog.models import Article, Category
 import markdown2
 
@@ -17,7 +18,7 @@ class IndexView(ListView):
         return articles_list
 
     def get_context_data(self, **kwargs):
-        kwargs['category_list'] = Category.objects.all().order_by('name')
+        kwargs['category_list'] = Category.objects.all().order_by('name').annotate(num_articles=Count('article'))
         return super(IndexView, self).get_context_data(**kwargs)
 
 
@@ -36,6 +37,8 @@ class ArticleDetailView(DetailView):
         article.views = article.views + 1
         article.save()
 
+        obj.views = article.views
+
         return obj
 
 
@@ -51,5 +54,6 @@ class CategoryView(ListView):
         return article_list
 
     def get_context_data(self, **kwargs):
-        kwargs['category_list'] = Category.objects.all().order_by('name')
+        kwargs['category_list'] = Category.objects.all().order_by('name').annotate(num_articles=Count('article'))
+        kwargs['active_category'] = Category.objects.all().filter(id=self.kwargs['cate_id'])[0]
         return super(CategoryView, self).get_context_data(**kwargs)
