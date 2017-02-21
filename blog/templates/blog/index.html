@@ -1,4 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Welcome!</h1>
+<div id="main">
+    <div id="left-side">
+        <div id="user-basic">Profile</div>
+        <div id="panel-categories">
+            <ul id="panel-categories-head">
+                <span>Categories</span>
+            </ul>
+            <ul id="panel-categories-body">
+                {% for category in category_list %}
+                    <li><a href="#">{{category.name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div id="right-side">
+        <div id="right-side-header">Articles List</div>
+        <div id="right-side-articles">
+            {% for article in article_list %}
+                <div class="right-side-article">
+                    <div class="right-side-article-title">
+                        <a href="/article/{{ article.id }}">
+                            <h3>{{ article.title }}</h3>
+                        </a>
+                    </div>
+                    <div class="right-side-article-time">
+                        {{ article.last_modified_time|date:"Y年n月d日h时m分s秒" }}
+                    </div>
+                    <div class="aright-side-rticle-abstract">{{ article.abstract }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}

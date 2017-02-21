@@ -11,7 +11,9 @@
 <body>
 <div id="header">
     <div id="header-wrap">
-        <a href="{% url 'blog:index' %}" title="我的第一个博客" id="logo"></a>
+        <div id="header-logo">
+            <a href="{% url 'blog:index' %}" title="我的第一个博客" id="logo"></a>
+        </div>
         <div id="header-right" class="login">
             <button class="btn btn-default">Log In</button>
 {#            <button class="btn btn-default">Register</button>#}

@@ -7,6 +7,18 @@ a {
     text-decoration: none;
 }
 
+li {
+    list-style: none;
+}
+
+div {
+    display: block;
+}
+
+body {
+    display: block;
+}
+
 #header {
     width: 100%;
     height: 60px;
@@ -20,23 +32,30 @@ a {
 
 #content {
     width: 100%;
-    min-height: 400px;
     background: aquamarine;
+    float: left;
 }
 
 #footer {
     width: 100%;
     height: 50px;
     background: chartreuse;
+    float: left;
+}
+
+#header-logo {
+    height: 60px;
+    line-height: 60px;
+    width: 150px;
+    margin-left: 30px;
+    float: left;
 }
 
 #logo {
     background: url("../img/blog_log.jpg") no-repeat;
-    height: 60px;
-    lin-height: 60px;
-    width: 150px;
-    margin-left: 30px;
-    float: left;
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .login {
@@ -56,9 +75,10 @@ a {
 
 #main {
     width: 80%;
-    min-height: 300px;
+    min-height: 500px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 0px;
     padding: 20px 0;
 }
 
@@ -80,8 +100,64 @@ a {
 
 #single-nav li {
     float: left;
-    list-style: none;
     height: 30px;
     line-height: 30px;
     margin-right: 10px;
+}
+
+/*侧边栏*/
+#left-side {
+    width: 20%;
+    height: 100%;
+    background: #8cd0d3;
+    float: left;
+}
+
+#user-basic {
+    width: 100%;
+    height: 400px;
+    background: #00BB00;
+}
+
+#panel-categories {
+    width: 100%;
+    height: 300px;
+    background: white;
+    padding: 7px;
+}
+
+#panel-categories-head {
+    font-size: 18px;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    background: cadetblue;
+    border-radius: 10%;
+    text-align: center;
+}
+
+/*右侧文章栏*/
+#right-side {
+    width: 70%;
+    min-height: 400px;
+    background: #8cd0d3;
+    float: right;
+}
+
+#right-side-header {
+    font-size: 18px;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    background: cadetblue;
+    text-align: center;
+}
+
+.right-side-article {
+    width: 100%;
+    height: 140px;
+    margin: 20px 0;
+    border: 1px solid;
+    padding: 0 20px;
+    background: #e5e5e5;
 }
