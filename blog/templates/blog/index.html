@@ -19,12 +19,14 @@
         </div>
     </div>
     <div id="right-side">
+        {% load paginate_tags %}
+        {% paginate article_list 5 %}
         <div id="right-side-header">Articles List
             {% if active_category.name != null %}
                 >{{ active_category.name }}
             {% endif %}
         </div>
-        <div id="right-side-articles">
+        <div id="right-side-articles-wrap">
             {% for article in article_list %}
                 <div class="right-side-article">
                     <div class="right-side-article-title">
@@ -37,7 +39,7 @@
                         <span>Views({{ article.views }})</span>
                         <span>Likes({{ article.likes }})</span>
                     </div>
-                    <div class="aright-side-article-abstract">
+                    <div class="right-side-article-abstract">
                         {% if article.abstract != null and article.abstract != '' %}
                             {{ article.abstract }}
                         {% else %}
@@ -47,6 +49,7 @@
                 </div>
             {% endfor %}
         </div>
+        {% include 'blog/pagination.html' %}
     </div>
 </div>
 
