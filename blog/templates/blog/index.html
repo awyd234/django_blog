@@ -20,7 +20,7 @@
     </div>
     <div id="right-side">
         {% load paginate_tags %}
-        {% paginate article_list 5 %}
+        {% paginate article_list 3 %}
         <div id="right-side-header">Articles List
             {% if active_category.name != null %}
                 >{{ active_category.name }}

@@ -7,6 +7,10 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 li {
     list-style: none;
 }
@@ -190,11 +194,40 @@ body {
     padding: 0;
 }
 
+/*分页功能*/
 #pagenav {
-    border: 1px solid;
     width: 100%;
     height: 40px;
     line-height: 40px;
     text-align: center;
+    padding: 0 20px;
+    position: relative;
+}
+
+#pagenav a, #pagenav span {
+    height: 32px;
+    line-height: 32px;
     font-size: 18px;
+    padding: 0 10px;
+    display: inline-block;
+}
+
+#pagenav a:hover {
+    background: #fbfdfd;
+}
+
+#pagenav span.current {
+    background: white;
+}
+
+.previous-page {
+    position: absolute;
+    left: 0;
+    width: 120px;
+}
+
+.next-page {
+    position: absolute;
+    right: 0;
+    width: 120px;
 }

@@ -1,6 +1,6 @@
 <div id="pagenav">
     {% if article_list.has_previous %}
-        <a href="?page={{ article_list.previous_page_number }}">Pre Page</a>
+        <a class="previous-page" href="?page={{ article_list.previous_page_number }}">Pre Page</a>
     {% endif %}
     {% if first_page == current_page %}
         <span class="current">1</span>
@@ -22,12 +22,12 @@
     {% endif %}
     {% if last_page > 1 %}
         {% if last_page == current_page %}
-            <span class="last">{{ last_page }}</span>
+            <span class="current">{{ last_page }}</span>
         {% else %}
             <a href="?page={{ last_page }}">{{ last_page }}</a>
         {% endif %}
     {% endif %}
     {% if article_list.has_next %}
-        <a href="?page={{ article_list.next_page_number }}">Next Page</a>
+        <a class="next-page" href="?page={{ article_list.next_page_number }}">Next Page</a>
     {% endif %}
 </div>
