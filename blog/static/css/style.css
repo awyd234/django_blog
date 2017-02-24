@@ -85,6 +85,7 @@ body {
     margin-right: auto;
     margin-bottom: 0px;
     padding: 20px 0;
+    height: 100%
 }
 
 #detail-tittle {
@@ -234,4 +235,54 @@ body {
     position: absolute;
     right: 0;
     width: 120px;
+}
+
+/*评论区*/
+#comments {
+    background: white;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+#comments-head {
+    background: #ccc;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 3px;
+}
+
+.comment-block {
+    width: 100%;
+    margin-bottom: 10px;
+    float: left;
+}
+
+.comment-block-head {
+    background: #ddd;
+    float: left;
+    color: #555;
+    width: 100%;
+}
+
+.comment-username {
+    width: 30px;
+}
+
+.comment-content {
+    width: 100%;
+    float: left;
+}
+
+.comment-user-icon {
+    width: 4%;
+    height: 40px;
+    background: #0000C0;
+    float: left;
+}
+
+.comment-body {
+    width: 95%;
+    height: 40px;
+    float: right;
 }

@@ -1,0 +1,35 @@
+<div id="comments">
+    <div id="comments-main">
+        <div id="comments-head">评论区</div>
+        {% for comment in comment_list %}
+            <div class="comment-block">
+                <div class="comment-block-head">
+                    {{ comment.no }}楼
+                    <a href="#" class="comment-username">{{ comment.user.username }}</a>
+                    <span class="comment-time">{{ comment.create_time|date:"Y-n-d H:m" }}发表</span>
+                </div>
+                <div class="comment-content">
+                    <div class="comment-user-icon">
+                        <a href="#">
+                            <img src="">
+                        </a>
+                    </div>
+                    <div class="comment-body">
+                        {{ comment.body }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <form method="post" action="{% url 'blog:comment' article.pk %}">
+        {% csrf_token %}
+        <div class="row">
+            {% for field in form %}
+                {{ field }}
+                {{ field.errors }}
+                <br>
+            {% endfor %}
+        </div>
+        <button type="submit" class="com-button">Submit</button>
+    </form>
+</div>

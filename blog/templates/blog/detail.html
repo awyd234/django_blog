@@ -25,7 +25,7 @@
                 </div>
                 <div class="date-read">
                     <i class="icon-date"></i>
-                    <span class="date">{{ article.last_modified_time|date:"Y-n-d h:m" }}</span>
+                    <span class="date">{{ article.last_modified_time|date:"Y-n-d H:m" }}</span>
                     <span>Views({{ article.views }})</span>
                     <span>Likes({{ article.likes }})</span>
                 </div>
@@ -33,7 +33,7 @@
                     {{ article.body | safe }}
                 </div>
             </div>
+            {% include 'blog/comment.html' %}
         </div>
     </div>
-    <div id="previous-next-nav"></div>
 {% endblock %}
