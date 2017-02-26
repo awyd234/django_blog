@@ -5,7 +5,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.db.models.aggregates import Count, Aggregate
 from django.shortcuts import get_object_or_404, HttpResponseRedirect, render
-from blog.models import Article, Category, Comment, User
+from blog.models import Article, Category, Comment
 
 from .models import Comment
 from .forms import BlogCommentForm
@@ -15,16 +15,18 @@ import markdown2
 class IndexView(ListView):
     template_name = "blog/index.html"
     context_object_name = "article_list"
+    pk_url_kwarg = "username"
 
     def get_queryset(self):
-        articles_list = Article.objects.filter(status='p').order_by('created_time')
+        articles_list = Article.objects.filter(status='p', user__username=self.kwargs['username']).order_by('created_time')
         for article in articles_list:
             article.body = markdown2.markdown(article.body, )
         return articles_list
 
     def get_context_data(self, **kwargs):
         # todo annotate的用法，count的意思
-        kwargs['category_list'] = Category.objects.all().order_by('name').annotate(num_articles=Count('article'))
+        kwargs['username'] = self.kwargs['username']
+        kwargs['category_list'] = Category.objects.filter(user__username=kwargs['username']).order_by('name').annotate(num_articles=Count('article'))
         return super(IndexView, self).get_context_data(**kwargs)
 
 
@@ -33,6 +35,10 @@ class ArticleDetailView(DetailView):
     template_name = "blog/detail.html"
     context_object_name = "article"
     pk_url_kwarg = 'article_id'
+
+    def get_queryset(self):
+        article_list = Article.objects.filter(user__username=self.kwargs['username'])
+        return article_list
 
     def get_object(self, queryset=None):
         obj = super(ArticleDetailView, self).get_object()
@@ -56,6 +62,7 @@ class ArticleDetailView(DetailView):
             no_count += 1
         kwargs['comment_list'] = comment_list
         kwargs['form'] = BlogCommentForm()
+        kwargs['username'] = self.kwargs['username']
         return super(ArticleDetailView, self).get_context_data(**kwargs)
 
 
@@ -71,8 +78,9 @@ class CategoryView(ListView):
         return article_list
 
     def get_context_data(self, **kwargs):
-        kwargs['category_list'] = Category.objects.all().order_by('name').annotate(num_articles=Count('article'))
+        kwargs['category_list'] = Category.objects.filter(user__username=self.kwargs['username']).order_by('name').annotate(num_articles=Count('article'))
         kwargs['active_category'] = Category.objects.all().filter(id=self.kwargs['cate_id'])[0]
+        kwargs['username'] = self.kwargs['username']
         return super(CategoryView, self).get_context_data(**kwargs)
 
 

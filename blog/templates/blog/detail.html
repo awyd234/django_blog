@@ -4,18 +4,18 @@
         <div id="main">
             <div id="detail-tittle">
                 <ul id="single-nav">
-                    <li><a href="{% url 'blog:index' %}">首页</a></li>
+                    <li><a href="{% url 'blog:home' username  %}">首页</a></li>
                     <li>&gt;</li>
                     <li>
                         <ul class="post-categories">
                             <li>
-                                <a href="/category/{{ article.category_id }}" title="" rel="category">{{ article.category.name }}</a>
+                                <a href="/{{ username }}/category/{{ article.category_id }}" title="" rel="category">{{ article.category.name }}</a>
                             </li>
                         </ul>
                     </li>
                     <li>&gt;</li>
                     <li class="title-active">
-                        <a href="{% url 'blog:detail' article.pk %}" rel="bookmark">{{ article.title }}</a>
+{#                        <a href="{% url 'blog:detail' article.pk %}" rel="bookmark">{{ article.title }}</a>#}
                     </li>
                 </ul>
             </div>

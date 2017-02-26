@@ -10,14 +10,14 @@ class BlogCommentForm(forms.ModelForm):
         指定一些Meta选项以改变form被渲染后的样式
         '''
         model = Comment
-        fields = ['user', 'body']
+        fields = ['body']
 
         widgets = {
-            'user': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': '请输入用户id(临时)',
-                'aria-describedby': 'sizing-addon1',
-            }),
+            # 'user': forms.TextInput(attrs={
+            #     'class': 'form-control',
+            #     'placeholder': '请输入用户id(临时)',
+            #     'aria-describedby': 'sizing-addon1',
+            # }),
             'body': forms.Textarea(attrs={
                 'placeholder': '请输入评论',
             })

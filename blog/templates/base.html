@@ -3,26 +3,36 @@
 <html lang="utf-8">
 <head>
     <meta charset="UTF-8">
-    <title>MyBlog</title>
+    <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/pygments/github.css' %}">
-    <script type="javascript" href="{% static 'js/jquery-3.1.1.js' %}"></script>
+    <script src={% static 'js/jquery-3.1.1.js' %}></script>
+
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $("#login-button").on("click", function () {
+                location.href = "/user/login";
+            })
+        })
+    </script>
 </head>
 <body>
 <div id="header">
     <div id="header-wrap">
         <div id="header-logo">
-            <a href="{% url 'blog:index' %}" title="我的第一个博客" id="logo"></a>
+            <a href="{% url 'blog:home' %}" title="我的第一个博客" id="logo"></a>
         </div>
         <div id="header-right" class="login">
-            <button class="btn btn-default">Log In</button>
+            <button class="btn btn-default" id="login-button">Log In</button>
 {#            <button class="btn btn-default">Register</button>#}
         </div>
     </div>
 </div>
 <div id="content">
-    {% block content %} {% endblock %}
+    <div id="main">
+        {% block content %} {% endblock %}
+    </div>
 </div>
 <div id="footer">
     <div id="footer-wrap">

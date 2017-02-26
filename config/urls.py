@@ -14,15 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-#from userena import views as userena_views
-import views
+from django.contrib import admin
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='home'),
-    # url(r'^/aaa$', include 'all'),
-    #url(r'^user/login$', userena_views.login),
-    # url(r'^(?P<username>[0-9a-zA-Z]+)$', views.IndexView.as_view(), name='home'),
-    url(r'^(?P<username>[0-9a-zA-Z]+)/article/(?P<article_id>\d+)$', views.ArticleDetailView.as_view(), name='detail'),# to learn
-    url(r'^(?P<username>[0-9a-zA-Z]+)/category/(?P<cate_id>\d+)$', views.CategoryView.as_view(), name='category'),
-    url(r'^article/(?P<article_id>\d+)/comment/$', views.CommentPostView.as_view(), name='comment'),
+    url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include('userena.urls'),),
+    url(r'^blog/', include('blog.urls', namespace='blog', app_name='blog')),
 ]

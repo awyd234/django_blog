@@ -10,7 +10,7 @@
             <ul id="panel-categories-body">
                 {% for category in category_list %}
                     <li class="panel-categories-name">
-                        <a href="/category/{{ category.id }}">
+                        <a href="/{{ username }}/category/{{ category.id }}">
                             {{category.name}}({{ category.num_articles }})
                         </a>
                     </li>
@@ -30,7 +30,7 @@
             {% for article in article_list %}
                 <div class="right-side-article">
                     <div class="right-side-article-title">
-                        <a href="/article/{{ article.id }}">
+                        <a href="/{{ username }}/article/{{ article.id }}">
                             <h3>{{ article.title }}</h3>
                         </a>
                     </div>
