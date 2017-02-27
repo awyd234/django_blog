@@ -98,6 +98,7 @@ body {
 #post-main {
     background: white;
     padding: 10px 20px;
+    width: 100%;
     min-height: 400px;
 }
 
@@ -244,6 +245,11 @@ body {
     padding: 10px;
 }
 
+#comments-main {
+    width: 100%;
+    float: left;
+}
+
 #comments-head {
     background: #ccc;
     font-weight: bold;
@@ -288,6 +294,5 @@ body {
 
 .comment-body {
     width: 95%;
-    height: 40px;
     float: right;
 }

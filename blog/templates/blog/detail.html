@@ -27,7 +27,10 @@
                     <i class="icon-date"></i>
                     <span class="date">{{ article.last_modified_time|date:"Y-n-d H:m" }}</span>
                     <span>Views({{ article.views }})</span>
-                    <span>Likes({{ article.likes }})</span>
+                    <span id="article-like-button">
+                        <button class="btn btn-sm btn-default">Likes</button>
+                        (<span>{{ article.likes }}</span>)
+                    </span>
                 </div>
                 <div class="post-bd">
                     {{ article.body | safe }}

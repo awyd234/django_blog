@@ -17,6 +17,26 @@
             });
             $("#logout-button").on("click", function () {
                 location.href = "/accounts/";
+            });
+            $('#article-like-button  button').on("click", function () {
+                var article_id = {{ article.id }};
+                var user_id = {{ article.user.id }};
+                var params = {"article_id": article_id, "user_id": user_id};
+                var this_obj = $(this);
+                $.ajax({
+                    type: "GET",
+                    url: "/blog/article-like",
+                    dataType: "json",
+                    data: params,
+                    error: function () {
+                    },
+                    success: function (data) {
+                        if(data['status'] == 0) {
+                             this_obj.next().text(data['data']['likes']);
+                             this_obj.attr("disabled", true);
+                        }
+                    }
+                });
             })
         })
     </script>

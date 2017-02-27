@@ -4,12 +4,13 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.db.models.aggregates import Count, Aggregate
-from django.shortcuts import get_object_or_404, HttpResponseRedirect, render
+from django.shortcuts import get_object_or_404, HttpResponseRedirect, render, HttpResponse
 from blog.models import Article, Category, Comment
 
 from .models import Comment
 from .forms import BlogCommentForm
 import markdown2
+import json
 
 
 class IndexView(ListView):
@@ -57,7 +58,7 @@ class ArticleDetailView(DetailView):
         comment_list = self.object.comment_set.all()
         no_count = 1
         for comment in comment_list:
-            # comment.body = markdown2.markdown(comment.body)
+            comment.body = markdown2.markdown(comment.body, extras=['fenced-code-blocks'],)
             comment.no = no_count
             no_count += 1
         kwargs['comment_list'] = comment_list
@@ -105,3 +106,25 @@ class CommentPostView(FormView):
             'article': target_article,
             'comment_list': target_article.comments_set.all()
         })
+
+
+def ajax_article_like(request):
+    result = {
+        'msg': '',
+        'data': '',
+        'status': 0
+    }
+    try:
+        article_id = request.GET.get('article_id')
+        user_id = request.GET.get('user_id')
+        article = Article.objects.get(id=article_id)
+        article.likes += 1
+        article.save()
+        result['data'] = {'likes': article.likes}
+    except Exception as ex:
+        result['msg'] = ex
+        result['status'] = 1
+    return HttpResponse(
+        json.dumps(result),
+        content_type="application/json"
+    )

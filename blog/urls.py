@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^(?P<username>[0-9a-zA-Z]+)/article/(?P<article_id>\d+)$', views.ArticleDetailView.as_view(), name='detail'),# to learn
     url(r'^(?P<username>[0-9a-zA-Z]+)/category/(?P<cate_id>\d+)$', views.CategoryView.as_view(), name='category'),
     url(r'^/article/(?P<article_id>\d+)/comment/$', views.CommentPostView.as_view(), name='comment'),
+    url(r'^article-like', views.ajax_article_like, name='ajax-article-like'),
 ]
