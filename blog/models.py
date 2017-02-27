@@ -32,7 +32,7 @@ class Article(models.Model):
         ordering = ['-last_modified_time']
 
     def get_absolute_url(self):
-        return reverse('blog:detail', kwargs={'article_id': self.pk})
+        return reverse('blog:detail', kwargs={'article_id': self.pk, 'username': self.user.username})
 
 
 class Category(models.Model):

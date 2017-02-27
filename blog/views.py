@@ -57,7 +57,7 @@ class ArticleDetailView(DetailView):
         comment_list = self.object.comment_set.all()
         no_count = 1
         for comment in comment_list:
-            comment.body = markdown2.markdown(comment.body)
+            # comment.body = markdown2.markdown(comment.body)
             comment.no = no_count
             no_count += 1
         kwargs['comment_list'] = comment_list
@@ -92,6 +92,7 @@ class CommentPostView(FormView):
         target_article = get_object_or_404(Article, pk=self.kwargs['article_id'])
         comment = form.save(commit=False)
         comment.article = target_article
+        comment.user_id = self.request.user.id
         comment.save()
 
         self.success_url = target_article.get_absolute_url()

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load i18n %}
 <html lang="utf-8">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +13,10 @@
     <script type="application/javascript">
         $(document).ready(function () {
             $("#login-button").on("click", function () {
-                location.href = "/user/login";
+                location.href = "/accounts/signin";
+            });
+            $("#logout-button").on("click", function () {
+                location.href = "/accounts/";
             })
         })
     </script>
@@ -21,12 +25,19 @@
 <div id="header">
     <div id="header-wrap">
         <div id="header-logo">
-            <a href="{% url 'blog:home' %}" title="我的第一个博客" id="logo"></a>
+            <a href="/blog/{{ user.username }}" title="{% trans 'My First Blog' %}" id="logo"></a>
         </div>
-        <div id="header-right" class="login">
+        <div id="header-right" class="accounts">
+        {% if user.username == '' %}
             <button class="btn btn-default" id="login-button">Log In</button>
 {#            <button class="btn btn-default">Register</button>#}
+        {% else %}
+            <button class="btn btn-default" id="logout-button">Log Out</button>
+{#            <button class="btn btn-default">Register</button>#}
+            </div>
+        {% endif %}
         </div>
+
     </div>
 </div>
 <div id="content">

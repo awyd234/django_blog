@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}
+    {{ username }}的Blog
+{% endblock %}
 {% block content %}
 <div id="main">
     <div id="left-side">
@@ -10,7 +13,7 @@
             <ul id="panel-categories-body">
                 {% for category in category_list %}
                     <li class="panel-categories-name">
-                        <a href="/{{ username }}/category/{{ category.id }}">
+                        <a href="/blog/{{ username }}/category/{{ category.id }}">
                             {{category.name}}({{ category.num_articles }})
                         </a>
                     </li>
@@ -30,12 +33,12 @@
             {% for article in article_list %}
                 <div class="right-side-article">
                     <div class="right-side-article-title">
-                        <a href="/{{ username }}/article/{{ article.id }}">
+                        <a href="/blog/{{ username }}/article/{{ article.id }}">
                             <h3>{{ article.title }}</h3>
                         </a>
                     </div>
                     <div class="right-side-article-time">
-                        {{ article.last_modified_time|date:"Y-n-d H:m" }}
+                        {{ article.last_modified_time|date:"Y-m-d H:i" }}
                         <span>Views({{ article.views }})</span>
                         <span>Likes({{ article.likes }})</span>
                     </div>

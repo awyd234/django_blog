@@ -5,13 +5,13 @@
             <div class="comment-block">
                 <div class="comment-block-head">
                     {{ comment.no }}楼
-                    <a href="#" class="comment-username">{{ comment.user.username }}</a>
-                    <span class="comment-time">{{ comment.create_time|date:"Y-n-d H:m" }}发表</span>
+                    <a href="/blog/{{ comment.user.username }}" class="comment-username">{{ comment.user.username }}</a>
+                    <span class="comment-time">{{ comment.create_time|date:"Y-m-d H:i" }}发表</span>
                 </div>
                 <div class="comment-content">
                     <div class="comment-user-icon">
-                        <a href="#">
-                            <img src="">
+                        <a href="/blog/{{ comment.user.username }}">
+                            <img class="mugshot" src="{{ comment.user.user_profile.get_mugshot_url }}">
                         </a>
                     </div>
                     <div class="comment-body">

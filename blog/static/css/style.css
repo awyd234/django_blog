@@ -63,13 +63,13 @@ body {
     display: block;
 }
 
-.login {
+.accounts {
     float: right;
     margin-top: 10px;
     margin-right: 50px;
 }
 
-.login button {
+.accounts button {
     color: white;
     font-weight: bold;
     font-size: 18px;
@@ -277,8 +277,13 @@ body {
 .comment-user-icon {
     width: 4%;
     height: 40px;
-    background: #0000C0;
     float: left;
+}
+
+.comment-user-icon .mugshot {
+    width: 100%;
+    transform:scale(1.2);
+    margin-top: 5px;
 }
 
 .comment-body {
