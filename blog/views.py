@@ -6,9 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.aggregates import Count, Aggregate
 from django.shortcuts import get_object_or_404, HttpResponseRedirect, render, HttpResponse
 from django.core import urlresolvers
-from blog.models import Article, Category, Comment
-
-from .models import Comment
+from .models import Article, Category, Comment
 from .forms import BlogCommentForm, PostEditForm
 import datetime
 import markdown2
@@ -21,7 +19,8 @@ class IndexView(ListView):
     pk_url_kwarg = "username"
 
     def get_queryset(self):
-        articles_list = Article.objects.filter(status='p', user__username=self.kwargs['username']).order_by('created_time')
+        articles_list = Article.objects.filter(status='p', user__username=self.kwargs['username']).order_by(
+            'created_time')
         for article in articles_list:
             article.body = markdown2.markdown(article.body, )
         return articles_list
@@ -29,7 +28,8 @@ class IndexView(ListView):
     def get_context_data(self, **kwargs):
         # todo annotate的用法，count的意思
         kwargs['username'] = self.kwargs['username']
-        kwargs['category_list'] = Category.objects.filter(user__username=kwargs['username']).order_by('name').annotate(num_articles=Count('article'))
+        kwargs['category_list'] = Category.objects.filter(user__username=kwargs['username']).order_by('name').annotate(
+            num_articles=Count('article'))
         return super(IndexView, self).get_context_data(**kwargs)
 
 
@@ -60,7 +60,7 @@ class ArticleDetailView(DetailView):
         comment_list = self.object.comment_set.all()
         no_count = 1
         for comment in comment_list:
-            comment.body = markdown2.markdown(comment.body, extras=['fenced-code-blocks'],)
+            comment.body = markdown2.markdown(comment.body, extras=['fenced-code-blocks'], )
             comment.no = no_count
             no_count += 1
         kwargs['comment_list'] = comment_list
@@ -81,7 +81,8 @@ class CategoryView(ListView):
         return article_list
 
     def get_context_data(self, **kwargs):
-        kwargs['category_list'] = Category.objects.filter(user__username=self.kwargs['username']).order_by('name').annotate(num_articles=Count('article'))
+        kwargs['category_list'] = Category.objects.filter(user__username=self.kwargs['username']).order_by(
+            'name').annotate(num_articles=Count('article'))
         kwargs['active_category'] = Category.objects.all().filter(id=self.kwargs['cate_id'])[0]
         kwargs['username'] = self.kwargs['username']
         return super(CategoryView, self).get_context_data(**kwargs)
@@ -108,6 +109,12 @@ class CommentPostView(FormView):
             'article': target_article,
             'comment_list': target_article.comments_set.all()
         })
+
+    def get_context_data(self, **kwargs):
+        context = super(CommentPostView, self).get_context_data(**kwargs)
+        context['article_id'] = self.kwargs['article_id']
+        context['username'] = self.request.user.username
+        return context
 
 
 def ajax_article_like(request):
@@ -156,4 +163,3 @@ class PostEditView(LoginRequiredMixin, UpdateView):
         article.save()
         self.success_url = target_article.get_absolute_url()
         return HttpResponseRedirect(self.success_url)
-
