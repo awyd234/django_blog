@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'userena',
     'guardian',
     'easy_thumbnails',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 SITE_ID = 1
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
 # Database
@@ -144,7 +147,8 @@ LOGOUT_URL = '/accounts/signout/'
 
 # USERENA_LANGUAGE_FIELD = 'en-us'
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-cn'
 # ugettext = lambda s: s
 # LANGUAGES = (
 #     ('en', ugettext('English')),
