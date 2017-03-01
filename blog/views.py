@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from django.views.generic import ListView, FormView, DetailView, UpdateView
+from django.views.generic import ListView, FormView, DetailView, UpdateView, CreateView
 from django.http import HttpResponseForbidden
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.aggregates import Count, Aggregate
 from django.shortcuts import get_object_or_404, HttpResponseRedirect, render, HttpResponse
 from django.core import urlresolvers
 from .models import Article, Category, Comment
-from .forms import BlogCommentForm, PostEditForm
+from .forms import BlogCommentForm, PostEditForm, PostAddForm
 import datetime
 import markdown2
 import json
@@ -137,6 +137,31 @@ def ajax_article_like(request):
         json.dumps(result),
         content_type="application/json"
     )
+
+
+class PostAddView(LoginRequiredMixin, CreateView):
+    model = Article
+    form_class = PostAddForm
+    template_name = "blog/edit.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        cate_id = self.kwargs.get('cate_id')
+        self.category = None
+        if cate_id != '0':
+            self.category = Category.objects.get(id=cate_id)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_initial(self):
+        initial = super().get_initial()
+
+        initial['category'] = self.category
+        initial['user'] = self.request.user
+        return initial
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        response = super(PostAddView, self).form_valid(form)
+        return response
 
 
 class PostEditView(LoginRequiredMixin, UpdateView):

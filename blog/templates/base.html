@@ -48,6 +48,13 @@
             });
             $("#article-edit-button").on("click", function () {
                 location.href = "/blog/post/{{ article.id }}/edit/";
+            });
+            $("#article-add-button").on("click", function () {
+                var category = 0;
+                {% if active_category.id %}
+                    category = {{ active_category.id }}
+                {% endif %}
+                location.href = "/blog/post/" + category + "/add/";
             })
         })
     </script>

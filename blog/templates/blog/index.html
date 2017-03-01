@@ -28,6 +28,9 @@
             {% if active_category.name != null %}
                 >{{ active_category.name }}
             {% endif %}
+            {% if user.username == username %}
+                <button id="article-add-button" class="btn btn-sm btn-warning">Add</button>
+            {% endif %}
         </div>
         <div id="right-side-articles-wrap">
             {% for article in article_list %}
