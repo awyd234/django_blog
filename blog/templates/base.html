@@ -19,8 +19,16 @@
                 location.href = "/accounts/";
             });
             $('#article-like-button  button').on("click", function () {
-                var article_id = {{ article.id }};
-                var user_id = {{ article.user.id }};
+                {% if article.id is not None %}
+                    var article_id = {{ article.id }};
+                {% else %}
+                    var article_id = 0;
+                {% endif %}
+                {% if article.user.id is not None %}
+                    var user_id = {{ article.user.id }};
+                {% else %}
+                    var user_id = 0;
+                {% endif %}
                 var params = {"article_id": article_id, "user_id": user_id};
                 var this_obj = $(this);
                 $.ajax({
@@ -37,6 +45,9 @@
                         }
                     }
                 });
+            });
+            $("#article-edit-button").on("click", function () {
+                location.href = "/blog/post/{{ article.id }}/edit/";
             })
         })
     </script>
@@ -57,9 +68,7 @@
             </div>
         {% endif %}
         </div>
-
     </div>
-</div>
 <div id="content">
     <div id="main">
         {% block content %} {% endblock %}

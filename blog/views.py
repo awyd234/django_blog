@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormView
+from django.views.generic import ListView, FormView, DetailView
+from django.http import HttpResponseForbidden
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.aggregates import Count, Aggregate
 from django.shortcuts import get_object_or_404, HttpResponseRedirect, render, HttpResponse
+from django.core import urlresolvers
 from blog.models import Article, Category, Comment
 
 from .models import Comment
-from .forms import BlogCommentForm
+from .forms import BlogCommentForm, PostEditForm
+import datetime
 import markdown2
 import json
 
@@ -128,3 +130,43 @@ def ajax_article_like(request):
         json.dumps(result),
         content_type="application/json"
     )
+
+
+class PostEditView(FormView):
+    model = Article
+    form_class = PostEditForm
+    template_name = "blog/edit.html"
+
+    def get_initial(self, **kawrgs):
+        article = Article.objects.get(id=self.kwargs['article_id'])
+        initial = {
+            'title': article.title,
+            'category': article.category_id,
+            'abstract': article.abstract,
+            'body': article.body
+        }
+        return initial
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.helper.form_action = urlresolvers.reverse('blog:edit', kwargs={'article_id': self.kwargs.get('article_id')})
+        return form
+
+    def form_valid(self, form):
+        target_article = get_object_or_404(Article, pk=self.kwargs['article_id'])
+        article = form.save(commit=False)
+        article.id = target_article.id
+        article.created_time = target_article.created_time
+        article.last_modified_time = datetime.datetime.now()
+        article.user = target_article.user
+        article.topped = 1
+        article.status = 'p'
+        article.save()
+        self.success_url = target_article.get_absolute_url()
+        return HttpResponseRedirect(self.success_url)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostEditView, self).get_context_data(**kwargs)
+        context['article_id'] = self.kwargs['article_id']
+        context['username'] = self.request.user.username
+        return context

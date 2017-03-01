@@ -31,6 +31,9 @@
                         <button class="btn btn-sm btn-default">Likes</button>
                         (<span>{{ article.likes }}</span>)
                     </span>
+                    {% if user.username == username %}
+                        <button id="article-edit-button" class="btn btn-sm btn-warning">Edit</button>
+                    {% endif %}
                 </div>
                 <div class="post-bd">
                     {{ article.body | safe }}

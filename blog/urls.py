@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 #from userena import views as userena_views
-import views
+from . import views
 
 urlpatterns = [
     url(r'^(?P<username>[0-9a-zA-Z]+)$', views.IndexView.as_view(), name='home'),
@@ -24,6 +24,7 @@ urlpatterns = [
     # url(r'^(?P<username>[0-9a-zA-Z]+)$', views.IndexView.as_view(), name='home'),
     url(r'^(?P<username>[0-9a-zA-Z]+)/article/(?P<article_id>\d+)$', views.ArticleDetailView.as_view(), name='detail'),# to learn
     url(r'^(?P<username>[0-9a-zA-Z]+)/category/(?P<cate_id>\d+)$', views.CategoryView.as_view(), name='category'),
-    url(r'^/article/(?P<article_id>\d+)/comment/$', views.CommentPostView.as_view(), name='comment'),
+    url(r'^article/(?P<article_id>\d+)/comment/$', views.CommentPostView.as_view(), name='comment'),
+    url(r'^post/(?P<article_id>\d+)/edit/$', views.PostEditView.as_view(), name='edit'),
     url(r'^article-like', views.ajax_article_like, name='ajax-article-like'),
 ]

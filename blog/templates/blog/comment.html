@@ -21,7 +21,7 @@
             </div>
         {% endfor %}
     </div>
-    <form method="post" action="{% url 'blog:comment' article.pk %}">
+    <form  action="{% url 'blog:comment' article.pk %}">
         {% csrf_token %}
         <div class="row">
             {% for field in form %}
