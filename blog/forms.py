@@ -4,6 +4,7 @@ from django import forms
 from .models import Article, Comment
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from .models import Category
 
 
 class BlogCommentForm(forms.ModelForm):
@@ -37,6 +38,7 @@ class PostEditForm(forms.ModelForm):
         self.helper.form_method = "post"
         self.helper.form_action = ""
         self.helper.add_input(Submit('submit', 'Submit'))
+        self.fields['category'].queryset = Category.objects.filter(user_id=kwargs['instance'].user_id)
         self.fields['title'].label = '标题'
         self.fields['title'].label_class = 'col-lg-2'
         self.fields['body'].label = '正文'

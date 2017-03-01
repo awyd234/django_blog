@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.views.generic import ListView, FormView, DetailView
+from django.views.generic import ListView, FormView, DetailView, UpdateView
 from django.http import HttpResponseForbidden
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.aggregates import Count, Aggregate
@@ -132,28 +132,20 @@ def ajax_article_like(request):
     )
 
 
-class PostEditView(FormView):
+class PostEditView(LoginRequiredMixin, UpdateView):
     model = Article
     form_class = PostEditForm
     template_name = "blog/edit.html"
 
-    def get_initial(self, **kawrgs):
-        article = Article.objects.get(id=self.kwargs['article_id'])
-        initial = {
-            'title': article.title,
-            'category': article.category_id,
-            'abstract': article.abstract,
-            'body': article.body
-        }
-        return initial
-
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)
-        form.helper.form_action = urlresolvers.reverse('blog:edit', kwargs={'article_id': self.kwargs.get('article_id')})
+        form.helper.form_action = urlresolvers.reverse('blog:edit', kwargs={'pk': self.kwargs.get('pk')})
         return form
 
     def form_valid(self, form):
-        target_article = get_object_or_404(Article, pk=self.kwargs['article_id'])
+        if self.request.user != self.object.user:
+            return HttpResponseForbidden('只有帖子的作者才能编辑该帖子')
+        target_article = self.object
         article = form.save(commit=False)
         article.id = target_article.id
         article.created_time = target_article.created_time
@@ -165,8 +157,3 @@ class PostEditView(FormView):
         self.success_url = target_article.get_absolute_url()
         return HttpResponseRedirect(self.success_url)
 
-    def get_context_data(self, **kwargs):
-        context = super(PostEditView, self).get_context_data(**kwargs)
-        context['article_id'] = self.kwargs['article_id']
-        context['username'] = self.request.user.username
-        return context
