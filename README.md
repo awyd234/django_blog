@@ -1,4 +1,4 @@
-# dictionary
+# Django-blog
 
 基于Django + Python3.5的Blog
 
@@ -22,9 +22,11 @@ To do List:
 
     文章编辑功能的美化及工具条
 
-    文章删除修改功能
+    文章删除功能
 
     用户头像上传功能
+
+    用户行为前权限校验
 
     第三方api登录
 
