@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.aggregates import Count, Aggregate
 from django.shortcuts import get_object_or_404, HttpResponseRedirect, render, HttpResponse
 from django.core import urlresolvers
+from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
 from .models import Article, Category, Comment
 from .forms import BlogCommentForm, PostEditForm, PostAddForm
 import datetime
@@ -88,7 +90,7 @@ class CategoryView(ListView):
         return super(CategoryView, self).get_context_data(**kwargs)
 
 
-class CommentPostView(FormView):
+class CommentPostView(FormView, LoginRequiredMixin):
     form_class = BlogCommentForm
     template_name = 'blog/detail.html'
 
@@ -115,28 +117,6 @@ class CommentPostView(FormView):
         context['article_id'] = self.kwargs['article_id']
         context['username'] = self.request.user.username
         return context
-
-
-def ajax_article_like(request):
-    result = {
-        'msg': '',
-        'data': '',
-        'status': 0
-    }
-    try:
-        article_id = request.GET.get('article_id')
-        user_id = request.GET.get('user_id')
-        article = Article.objects.get(id=article_id)
-        article.likes += 1
-        article.save()
-        result['data'] = {'likes': article.likes}
-    except Exception as ex:
-        result['msg'] = ex
-        result['status'] = 1
-    return HttpResponse(
-        json.dumps(result),
-        content_type="application/json"
-    )
 
 
 class PostAddView(LoginRequiredMixin, CreateView):
@@ -188,3 +168,53 @@ class PostEditView(LoginRequiredMixin, UpdateView):
         article.save()
         self.success_url = target_article.get_absolute_url()
         return HttpResponseRedirect(self.success_url)
+
+
+def ajax_article_like(request):
+    result = {
+        'msg': '',
+        'data': '',
+        'status': 0
+    }
+    try:
+        article_id = request.GET.get('article_id')
+        user_id = request.GET.get('user_id')
+        article = Article.objects.get(id=article_id)
+        article.likes += 1
+        article.save()
+        result['data'] = {'likes': article.likes}
+    except Exception as ex:
+        result['msg'] = ex
+        result['status'] = 1
+    return HttpResponse(
+        json.dumps(result),
+        content_type="application/json"
+    )
+
+
+def ajax_category_add(request):
+    result = {
+        'msg': '',
+        'data': '',
+        'status': 0
+    }
+    try:
+        category_name = request.GET.get('category_name')
+        this_request_user = request.user
+        category = Category(name=category_name)
+        category.user = this_request_user
+        category.save()
+        aaa = Category.objects.filter(user=this_request_user).order_by(
+            'name').annotate(num_articles=Count('article')).values()
+        for each in aaa:
+            print(each)
+        category_list = aaa
+        result['data'] = list(category_list)
+    except Exception as ex:
+        result['msg'] = ex
+        result['status'] = 1
+    return HttpResponse(
+        json.dumps(result, cls=DjangoJSONEncoder),
+        content_type="application/json"
+    )
+

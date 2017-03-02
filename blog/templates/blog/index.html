@@ -7,9 +7,12 @@
     <div id="left-side">
         <div id="user-basic">Profile</div>
         <div id="panel-categories">
-            <ul id="panel-categories-head">
+            <div id="panel-categories-head">
                 <span>Categories</span>
-            </ul>
+                {% if user.username == username %}
+                    <button id="category-add-button" class="btn btn-xs btn-danger">+</button>
+                {% endif %}
+            </div>
             <ul id="panel-categories-body">
                 {% for category in category_list %}
                     <li class="panel-categories-name">

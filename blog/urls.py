@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^post/(?P<pk>[0-9]+)/edit/$', views.PostEditView.as_view(), name='edit'),
     url(r'^post/(?P<cate_id>[0-9]+)/add/$', views.PostAddView.as_view(), name='add'),
     url(r'^article-like', views.ajax_article_like, name='ajax-article-like'),
+    url(r'^category-add', views.ajax_category_add, name='ajax_category_add'),
 ]

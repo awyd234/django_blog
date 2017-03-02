@@ -55,6 +55,36 @@
                     category = {{ active_category.id }}
                 {% endif %}
                 location.href = "/blog/post/" + category + "/add/";
+            });
+            $("#category-add-button").on("click", function () {
+                var new_category = prompt("New category name：");
+                new_category = new_category.trim();
+                if(new_category == '') {
+                    alert("New category name can not be blank!");
+                    return;
+                }
+                $.ajax({
+                    type: "GET",
+                    url: "/blog/category-add",
+                    dataType: "json",
+                    data: {'category_name': new_category},
+                    error: function () {
+                        alert("Fail to add new category!");
+                    },
+                    success: function (data) {
+                        if(data['status'] == 0) {
+                             var return_data = data['data'];
+                             $("#panel-categories-body").empty();
+                             $(return_data).each(function (index, value) {
+                                 var li_object = $("<li class='panel-categories-name'></li>");
+                                 li_object.append("<a href = '/blog/{{ uesername }}/category/" + value['id'] + "'>" + value['name'] + "(" + value['num_articles'] + ")</a>");
+                                 $("#panel-categories-body").append(li_object);
+                             })
+                        } else {
+                            alert(data['msg']);
+                        }
+                    }
+                });
             })
         })
     </script>
