@@ -30,7 +30,7 @@ class BlogCommentForm(forms.ModelForm):
 class PostAddForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ('title', 'category', 'abstract', 'body', 'status', 'topped')
+        fields = ('title', 'status', 'topped', 'category', 'abstract', 'body', )
 
     def __init__(self, *args, **kwargs):
         super(PostAddForm, self).__init__(*args, **kwargs)
@@ -50,7 +50,7 @@ class PostAddForm(forms.ModelForm):
 class PostEditForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ('title', 'category', 'abstract', 'body')
+        fields = ('title', 'status', 'topped', 'category', 'abstract', 'body', )
 
     def __init__(self, *args, **kwargs):
         super(PostEditForm, self).__init__(*args, **kwargs)
