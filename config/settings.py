@@ -94,11 +94,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': get_value('mysql', 'db'),
-        'USER': get_value('mysql', 'username'),
-        'PASSWORD': get_value('mysql', 'paswd'),
-        'HOST': get_value('mysql', 'host'),
-        'PORT': get_value('mysql', 'port'),
+        'NAME': get_value('mysql_blog', 'db'),
+        'USER': get_value('mysql_blog', 'user'),
+        'PASSWORD': get_value('mysql_blog', 'passwd'),
+        'HOST': get_value('mysql_blog', 'host'),
+        'PORT': get_value('mysql_blog', 'port'),
     }
 }
 
