@@ -36,5 +36,5 @@ class UserProfile(UserenaBaseProfile):
     phone_number = models.CharField('手机号', max_length=11)
     language = models.CharField('语言', default='en', max_length=10)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.user

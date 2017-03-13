@@ -11,7 +11,7 @@
                 <div class="comment-content">
                     <div class="comment-user-icon">
                         <a href="/blog/{{ comment.user.username }}">
-                            <img class="mugshot" src="{{ comment.user.user_profile.get_mugshot_url }}">
+                            <img class="mugshot" src="/{{ comment.user.user_profile.get_mugshot_url }}">
                         </a>
                     </div>
                     <div class="comment-body">

@@ -108,7 +108,7 @@
         {% else %}
             <div class="top-nav-profile">
                 <a href="#">
-                    <img class="mugshot" src="{{ user.user_profile.get_mugshot_url }}">
+                    <img class="mugshot" src="/{{ user.user_profile.get_mugshot_url }}">
                     <span>{{ user.username }}</span>
                 </a>
                 <ul class="top-nav-dropdown" id="top-nav-profile-dropdown">
